@@ -2,6 +2,8 @@ package aplicacion;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -243,8 +245,25 @@ public class Aplicacion {
 	}
 		
 
-	private void consultarPedido() {
+	private void consultarPedido() throws IOException {		
+		String id = input("Ingrese id de factura");
+		FileReader fr = new FileReader(new File("src/data/facturas.txt"));
+		BufferedReader br = new BufferedReader(fr);
+		String s;
+		int i = 0;
+		int numeroId = Integer.parseInt(id);
+		String factura = "";
+		while((s = br.readLine())!=null){
+			if(i == numeroId) {
+				factura = factura + s + "\n";
+			}
+			if(s.contains(";")) {
+				i++;
+			}
 			
+		}
+		br.close();	
+		System.out.println(factura);
 	}	
 
 	public File getArchivoIngredientes() {
